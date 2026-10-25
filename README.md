@@ -73,3 +73,7 @@ WPF — настольное приложение
 Клиентские приложения → Web API → Entity Framework Core → PostgreSQL.
 
 API выступает связующим звеном между клиентскими приложениями и базой данных.
+
+## База данных
+
+SQL-скрипт `CulturalCenterDatabase.sql` содержит структуру базы данных PostgreSQL.
