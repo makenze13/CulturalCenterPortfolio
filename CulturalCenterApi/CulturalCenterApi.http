@@ -1,0 +1,6 @@
+@CulturalCenterApi_HostAddress = http://localhost:5079
+
+GET {{CulturalCenterApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

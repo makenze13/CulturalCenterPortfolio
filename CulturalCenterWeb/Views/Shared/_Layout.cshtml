@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CulturalCenterWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CulturalCenterWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="site-nav container">
+            <a class="site-logo" asp-controller="Home" asp-action="Index">
+                <div class="site-logo-icon">◆</div>
+
+                <div class="logo-text">
+                    <div>Культурный центр</div>
+                    <div>«Успех»</div>
+                </div>
+            </a>
+
+            <div class="site-nav-links">
+                <a asp-controller="Home" asp-action="Index">Главная</a>
+                <a asp-controller="Events" asp-action="Index">Мероприятия</a>
+                <a asp-controller="About" asp-action="Index">О центре</a>
+            </div>
+
+            <div class="user-actions">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-controller="Account"
+                        asp-action="Index"
+                        class="user-nickname">
+                        @User.Identity.Name
+                    </a>
+
+                    <form asp-controller="Account"
+                            asp-action="Logout"
+                            method="post"
+                            class="logout-form">
+
+                        <button type="submit"
+                            class="logout-button"
+                            aria-label="Выйти"
+                            title="Выйти">
+                            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-controller="Account"
+                        asp-action="Login"
+                        class="login-button">
+                        Войти
+                    </a>
+                }
+            </div>
+            
+        </nav>
+    </header>
+    <div class="container flex-grow-1">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="site-footer-content container">
+
+            <div class="site-footer-main">
+                <div class="site-footer-brand">
+                    <a class="site-footer-logo"
+                       asp-controller="Home"
+                       asp-action="Index">
+                        Культурный центр «Успех»
+                    </a>
+
+                    <p>
+                        Пространство для искусства, творчества
+                        и культурных событий.
+                    </p>
+                </div>
+
+                <div class="site-footer-contacts">
+                    <h3>Контакты</h3>
+                    <span>Свяжитесь с нами</span>
+                    <span>Информация о центре и мероприятиях</span>
+                </div>
+            </div>
+
+            <div class="site-footer-bottom">
+                <span>© 2026 Культурный центр «Успех»</span>
+                <span>Искусство объединяет</span>
+            </div>
+
+        </div>
+
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

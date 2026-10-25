@@ -1,0 +1,209 @@
+﻿<Window x:Class="CulturalCenterWpf.Views.Cashier.SaleSeatCashierWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CulturalCenterWpf.Views.Cashier"
+        mc:Ignorable="d"
+        Title="Продажа билета" Width="400" Height="620" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="{StaticResource BackgroundBrush}" Foreground="{StaticResource PrimaryTextBrush}" Icon="/Resource/CulturalCenterPNG.png">
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel>
+                
+                <TextBlock Text="ПРОДАЖА БИЛЕТА" 
+                           Style="{StaticResource SectionTitleStyle}"/>
+                
+                <TextBlock Text="Проверьте данные выбранного места" 
+                           Style="{StaticResource SectionDescriptionStyle}"/>
+                
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Right">
+                
+                <TextBlock Text="◆ УСПЕХ" 
+                           FontSize="15" 
+                           FontWeight="SemiBold" 
+                           Foreground="{StaticResource AccentBrush}" 
+                           HorizontalAlignment="Right"/>
+                
+                <TextBlock Text="КУЛЬТУРНЫЙ ЦЕНТР" 
+                           FontSize="9" 
+                           Foreground="{StaticResource SecondaryTextBrush}" 
+                           HorizontalAlignment="Right"/>
+                
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="2" Style="{StaticResource CardBorderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="24"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="24"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    
+                    <TextBlock Text="МЕРОПРИЯТИЕ" 
+                               FontSize="11" 
+                               Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                    <TextBlock Text="{Binding SeatEventDTO.EventName}"
+                               Margin="0,5,0,0" 
+                               FontSize="18" 
+                               FontWeight="SemiBold" 
+                               Foreground="{StaticResource PrimaryTextBrush}"/>
+                    
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0">
+                        
+                        <TextBlock Text="ДАТА" 
+                                   FontSize="11" 
+                                   Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                        <TextBlock Text="{Binding SeatEventDTO.EventDate, StringFormat={}{0:dd.MM.yyyy}}"
+                                   Margin="0,5,0,0" 
+                                   FontSize="14"
+                                   Foreground="{StaticResource PrimaryTextBrush}"/>
+                        
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        
+                        <TextBlock Text="ВРЕМЯ" 
+                                   FontSize="11" 
+                                   Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                        <TextBlock Text="{Binding SeatEventDTO.EventDate, StringFormat={}{0:HH:mm}}"
+                                   Margin="0,5,0,0" 
+                                   FontSize="14" 
+                                   Foreground="{StaticResource PrimaryTextBrush}"/>
+                        
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Grid.Row="4">
+                    
+                    <TextBlock Text="ВЫБРАННОЕ МЕСТО" 
+                               FontSize="11" 
+                               Foreground="{StaticResource SecondaryTextBrush}"/>
+                    
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            
+                            <TextBlock Text="Сектор" 
+                                       FontSize="12" 
+                                       Foreground="{StaticResource SecondaryTextBrush}"/>
+                            
+                            <TextBlock Text="{Binding Sector}"
+                                       Margin="0,3,0,0" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold" 
+                                       Foreground="{StaticResource PrimaryTextBrush}"/>
+                            
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1">
+                            
+                            <TextBlock Text="Ряд" 
+                                       FontSize="12" 
+                                       Foreground="{StaticResource SecondaryTextBrush}"/>
+                            
+                            <TextBlock Text="{Binding Row}" 
+                                       Margin="0,3,0,0" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold" 
+                                       Foreground="{StaticResource PrimaryTextBrush}"/>
+                            
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2">
+                            
+                            <TextBlock Text="Место" 
+                                       FontSize="12" 
+                                       Foreground="{StaticResource SecondaryTextBrush}"/>
+                            
+                            <TextBlock Text="{Binding Number}" 
+                                       Margin="0,3,0,0" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold" 
+                                       Foreground="{StaticResource PrimaryTextBrush}"/>
+                            
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="4" 
+                Background="{StaticResource InputBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="20,14">
+            <Grid>
+                <StackPanel>
+                    
+                    <TextBlock Text="К ОПЛАТЕ" 
+                               FontSize="11" 
+                               Foreground="{StaticResource SecondaryTextBrush}"/>
+                    
+                    <TextBlock Text="Стоимость билета" 
+                               Margin="0,3,0,0" 
+                               FontSize="13" 
+                               Foreground="{StaticResource PrimaryTextBrush}"/>
+                    
+                </StackPanel>
+
+                <TextBlock Text="{Binding Price, StringFormat={}{0:F2}}" 
+                           HorizontalAlignment="Right" 
+                           VerticalAlignment="Center" 
+                           FontSize="23" 
+                           FontWeight="SemiBold" 
+                           Foreground="{StaticResource AccentBrush}"/>
+                
+            </Grid>
+        </Border>
+
+        <Button Grid.Row="6" 
+                Content="ОПЛАТИТЬ" 
+                Width="220" 
+                HorizontalAlignment="Right" 
+                Style="{StaticResource ActionButtonStyle}" 
+                FontSize="13" 
+                Padding="18,12"
+                x:Name="PayButton"
+                Click="PayButton_Click"/>
+    </Grid>
+</Window>

@@ -1,0 +1,77 @@
+﻿@model Ticket
+
+@{
+    ViewData["Title"] = "Оплата успешна";
+}
+
+<section class="payment-success-page">
+    <a asp-controller="Events"
+       asp-action="Index"
+       class="back-link">
+        ← К мероприятиям
+    </a>
+
+<div class="payment-success-header">
+    <div class="payment-success-icon">✓</div>
+    <h1>Оплата прошла успешно!</h1>
+    <p>Спасибо за покупку. Ваш заказ оформлен.</p>
+    <span class="payment-order-number">
+        Заказ № @Model.IdTicket
+    </span>
+</div>
+
+<div class="digital-ticket">
+    <div class="digital-ticket-header">
+        <div>
+            <span class="event-type">Электронный билет</span>
+            <h2>@ViewBag.EventDto.EventName</h2>
+            <p>@ViewBag.EventDto.TypeEvent · Культурный центр «Успех»</p>
+        </div>
+
+        <div class="digital-ticket-logo">◆ УСПЕХ</div>
+    </div>
+
+    <div class="digital-ticket-image">
+        <img src="@Url.Content($"~/images/events/{ViewBag.EventDto.TypeEvent}.jpg")"
+             alt="@ViewBag.EventDto.TypeEvent" />
+    </div>
+
+    <div class="digital-ticket-info">
+        <div>
+            <span>Дата</span>
+            <strong>@ViewBag.EventDto.EventDate.ToString("dd MMMM yyyy")</strong>
+        </div>
+
+        <div>
+            <span>Время</span>
+            <strong>@ViewBag.EventDto.EventDate.ToString("HH:mm")</strong>
+        </div>
+
+        <div>
+            <span>Место</span>
+            <strong>@Model.Seat</strong>
+        </div>
+
+        <div>
+            <span>Стоимость</span>
+            <p>@Model.TicketPrice.ToString("N2") ₽</p>
+        </div>
+    </div>
+
+    <div class="digital-ticket-footer">
+        <div>
+            <span>Номер билета</span>
+            <strong>@Model.UnicTicketNumber</strong>
+        </div>
+    </div>
+</div>
+
+<div class="payment-success-actions">
+    <a asp-controller="Events"
+       asp-action="Index"
+       class="event-details">
+        Вернуться к мероприятиям →
+    </a>
+</div>
+
+</section>

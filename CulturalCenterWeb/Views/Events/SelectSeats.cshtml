@@ -1,0 +1,177 @@
+﻿@model CulturalCenterWeb.ViewsModels.SeatSectorsViewModel
+
+@{
+    ViewData["Title"] = "Выбор мест";
+}
+
+<section class="seat-selection-page">
+    <a asp-controller="Events"
+       asp-action="Details"
+       class="back-link">
+        ← Назад к мероприятию
+    </a>
+
+    <div class="seat-selection-header">
+        <span class="event-type">@Model.EventDto.TypeEvent</span>
+        <h1>@Model.EventDto.EventName</h1>
+        <p>@Model.EventDto.EventDate.ToString("dd MMMM yyyy") · @Model.EventDto.EventDate.ToString("HH:mm")</p>
+    </div>
+
+    <div class="seat-selection-layout">
+        <div class="seat-map-section">
+            <h2>Выберите места</h2>
+
+            <div class="seat-map-placeholder">
+                <div class="stage">СЦЕНА</div>
+
+                <div class="seat-map">
+                    <div class="seat-sector">
+                        <h3>Сектор C1</h3>
+
+                        <div class="seat-grid">
+                            @for (int row = 1; row <= 15; row++)
+                            {
+                                <div class="seat-row">
+                                    <span class="seat-row-number">@row</span>
+
+                                    @foreach (var seat in Model.SectorC1.Where(s => s.Row == row).OrderBy(s => s.Number))
+                                    {
+
+                                        <form asp-controller="Events" asp-action="SelectSeats" method="post">
+                                            <input type="hidden" name="idEvent" value="@Model.EventDto.IdEvent" />
+                                            <input type="hidden" name="row" value="@seat.Row" />
+                                            <input type="hidden" name="number" value="@seat.Number" />
+                                            <input type="hidden" name="sector" value="C1" />
+                                            <input type="hidden" name="price" value="@seat.Price" />
+
+                                            <button type="submit"
+                                                    class="seat @(seat.Status == SeatStatus.Sold ? "seat-sold" : "seat-free")"
+                                                    disabled="@(seat.Status == SeatStatus.Sold)">
+                                                @seat.Number
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="seat-sector">
+                        <h3>Сектор C2</h3>
+
+                        <div class="seat-grid">
+                            @for (int row = 1; row <= 15; row++)
+                            {
+                                <div class="seat-row">
+                                    <span class="seat-row-number">@row</span>
+
+                                    @foreach (var seat in Model.SectorC2.Where(s => s.Row == row).OrderBy(s => s.Number))
+                                    {
+                                        <form asp-controller="Events" asp-action="SelectSeats" method="post">
+                                            <input type="hidden" name="idEvent" value="@Model.EventDto.IdEvent" />
+                                            <input type="hidden" name="row" value="@seat.Row" />
+                                            <input type="hidden" name="number" value="@seat.Number" />
+                                            <input type="hidden" name="sector" value="C2" />
+                                            <input type="hidden" name="price" value="@seat.Price" />
+
+                                            <button type="submit"
+                                                    class="seat @(seat.Status == SeatStatus.Sold ? "seat-sold" : "seat-free")"
+                                                    disabled="@(seat.Status == SeatStatus.Sold)">
+                                                @seat.Number
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="seat-sector">
+                        <h3>Сектор C3</h3>
+
+                        <div class="seat-grid">
+                            @for (int row = 1; row <= 15; row++)
+                            {
+                                <div class="seat-row">
+                                    <span class="seat-row-number">@row</span>
+
+                                    @foreach (var seat in Model.SectorC3.Where(s => s.Row == row).OrderBy(s => s.Number))
+                                    {
+                                        <form asp-controller="Events" asp-action="SelectSeats" method="post">
+                                            <input type="hidden" name="idEvent" value="@Model.EventDto.IdEvent" />
+                                            <input type="hidden" name="row" value="@seat.Row" />
+                                            <input type="hidden" name="number" value="@seat.Number" />
+                                            <input type="hidden" name="sector" value="C3" />
+                                            <input type="hidden" name="price" value="@seat.Price" />
+
+                                            <button type="submit"
+                                                    class="seat @(seat.Status == SeatStatus.Sold ? "seat-sold" : "seat-free")"
+                                                    disabled="@(seat.Status == SeatStatus.Sold)">
+                                                @seat.Number
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seat-legend">
+                <span><i class="seat-legend-free"></i> Свободно</span>
+                <span><i class="seat-legend-sold"></i> Продано</span>
+            </div>
+        </div>
+
+        <div class="selected-seats-panel">
+            <h2>Ваш заказ</h2>
+
+            <p class="selected-seats-empty">
+                @if (ViewBag.ChooseSeat == false)
+                {
+                    <span>Вы пока не выбрали места</span>
+                }
+                else
+                {
+                    <span>Сектор: @ViewBag.Sector</span> <br/>
+                    <span>Ряд: @ViewBag.Row</span> <br/>
+                    <span>Место: @ViewBag.Number</span>
+                }
+            </p>
+
+            <div class="selected-seats-total">
+                <span>Итого</span>
+                
+                @if (ViewBag.ChooseSeat == false)
+                {
+                    <span>0 ₽</span>
+                }
+                else
+                {
+                    <span>@ViewBag.Price.ToString("N2") ₽</span>
+                }
+
+            </div>
+
+            @if (ViewBag.ChooseSeat == false)
+            {
+                <button type="button" class="event-buy-button" disabled>
+                    Выберите место
+                </button>
+            }
+            else
+            {
+                <a  asp-controller="Events"
+                    class="event-buy-button"
+                    asp-action="Payment"
+                    asp-route-idEvent="@Model.EventDto.IdEvent"
+                    asp-route-sector="@ViewBag.Sector"
+                    asp-route-row="@ViewBag.Row"
+                    asp-route-number="@ViewBag.Number">
+                    Перейти к оформлению
+                </a>
+            }
+        </div>
+    </div>
+</section>

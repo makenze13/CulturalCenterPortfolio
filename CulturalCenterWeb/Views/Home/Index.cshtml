@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Главная";
+}
+
+<section class="hero">
+    <div class="hero-image"></div>
+
+    <div class="hero-content">
+        <span class="hero-label">ИСКУССТВО · ТВОРЧЕСТВО · ВДОХНОВЕНИЕ</span>
+
+        <h1>
+            Культура,<br />
+            которая <span>объединяет</span>
+        </h1>
+
+        <p>
+            Откройте для себя мир музыки, театра и творчества.
+            Выбирайте мероприятия, находите новые впечатления
+            и проводите время с удовольствием.
+        </p>
+
+        <a class="hero-button"
+           asp-controller="Events"
+           asp-action="Index">
+            Смотреть мероприятия
+            <span>→</span>
+        </a>
+    </div>
+
+</section>

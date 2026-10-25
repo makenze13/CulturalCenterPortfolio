@@ -1,0 +1,67 @@
+﻿@using System.Security.Claims
+
+@model List<TicketEventGeneralInfoModel>
+
+@{
+    ViewData["Title"] = "Личный кабинет";
+
+    string userLogin = User.FindFirstValue(ClaimTypes.Name);
+}
+
+<section class="account-page">
+    <div class="account-header">
+        <div>
+            <span class="event-type">Мой аккаунт</span>
+            <h1>Личный кабинет</h1>
+        </div>
+    </div>
+
+<div class="account-layout">
+    <aside class="account-sidebar">
+        <div class="account-avatar">@userLogin[0]</div>
+        <h2>@userLogin</h2>
+        <p></p>
+
+    </aside>
+
+        <section class="account-section" id="purchases">
+            <div class="account-section-header">
+                <div>
+                    <h2>Мои покупки</h2>
+                    <p>Купленные билеты</p>
+                </div>
+            </div>
+
+            <div class="account-purchase-list">
+
+                @foreach (var ticket in Model)
+                {
+                    var parts = ticket.Seat.Split('-');
+
+                    <a class="account-purchase-card"
+                        asp-controller="Events"
+                        asp-action="PaymentSuccess"
+                        asp-route-idEvent="@ticket.IdEvent"
+                        asp-route-idTicket="@ticket.IdTicket">
+                        <img src="@Url.Content($"~/images/events/{ticket.TypeEvent}.jpg")"
+                             alt="@ticket.TypeEvent @ticket.EventName" />
+
+                        <div class="account-purchase-info">
+                            <span class="event-type">@ticket.TypeEvent</span>
+                            <h3>@ticket.EventName</h3>
+                            <p>@ticket.EventDate.ToString("dd MMMM yyyy") · @ticket.EventDate.ToString("HH:mm")</p>
+                            <p>Сектор @parts[0] · Ряд @parts[1] · Место @parts[2]</p>
+                        </div>
+
+                        <div class="account-purchase-status">
+                            <strong>@ticket.TicketPrice.ToString("N0") ₽</strong>
+                            <span class="purchase-status-paid">Оплачен</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    </div>
+</div>
+
+</section>

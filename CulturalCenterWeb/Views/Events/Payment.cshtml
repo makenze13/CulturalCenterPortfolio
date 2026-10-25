@@ -1,0 +1,140 @@
+﻿@model Seat
+
+@{
+ViewData["Title"] = "Оплата билетов";
+}
+
+<section class="payment-page">
+    <a asp-controller="Events"
+       asp-action="SelectSeats"
+       class="back-link">
+        ← Назад к выбору мест
+    </a>
+
+<div class="payment-header">
+    <span class="event-type">Оформление заказа</span>
+    <h1>Оплата билетов</h1>
+    <p>Завершите оформление заказа на мероприятие.</p>
+</div>
+
+<div class="payment-layout">
+    <div class="payment-form-section">
+        <form asp-controller="Events" asp-action="ConfirmPayment" method="post">
+            <h2>Данные банковской карты</h2>
+
+            <div class="payment-fields">
+                <div class="payment-field">
+                    <label for="cardType">Платёжная система</label>
+                    <select id="cardType" name="CardType" required>
+                        <option value="">Выберите карту</option>
+                        <option value="Visa">Visa</option>
+                        <option value="Mastercard">Mastercard</option>
+                        <option value="Mir">МИР</option>
+                    </select>
+                </div>
+
+                <div class="payment-field">
+                    <label for="cardNumber">Номер карты</label>
+                    <input id="cardNumber"
+                           name="CardNumber"
+                           type="text"
+                           inputmode="numeric"
+                           autocomplete="cc-number"
+                           placeholder="1234 5678 9012 3456"
+                           pattern="[0-9 ]{13,23}"
+                           maxlength="23"
+                           required />
+                </div>
+
+                <div class="payment-field">
+                    <label for="cardHolder">Имя владельца карты</label>
+                    <input id="cardHolder"
+                           name="CardHolder"
+                           type="text"
+                           autocomplete="cc-name"
+                           placeholder="IVAN IVANOV"
+                           pattern="[A-Za-z ]{2,50}"
+                           maxlength="50"
+                           required />
+                </div>
+
+                <div class="payment-field">
+                    <label for="expiryDate">Срок действия</label>
+                    <input id="expiryDate"
+                           name="ExpiryDate"
+                           type="text"
+                           autocomplete="cc-exp"
+                           placeholder="MM/YY"
+                           pattern="(0[1-9]|1[0-2])/[0-9]{2}"
+                           maxlength="5"
+                           required />
+                </div>
+
+                <div class="payment-field">
+                    <label for="cvv">CVV/CVC</label>
+                    <input id="cvv"
+                           name="Cvv"
+                           type="password"
+                           inputmode="numeric"
+                           autocomplete="cc-csc"
+                           placeholder="123"
+                           pattern="[0-9]{3,4}"
+                           maxlength="4"
+                           required />
+                </div>
+
+                <h2>Способ оплаты</h2>
+
+                <div class="payment-method">
+                    <div class="payment-method-icon">₽</div>
+                    <div>
+                        <strong>Демо-оплата</strong>
+                        <p>Имитация оплаты</p>
+                    </div>
+                <span class="payment-method-check">✓</span>
+                </div>
+                    <div class="payment-divider"></div>
+
+                    <a  class="event-buy-button payment-submit-button"
+                        asp-controller="Events"
+                        asp-action="PaymentSuccess"
+                        asp-route-idEvent="@Model.SeatEventDTO.IdEvent"
+                        asp-route-sector="@Model.Sector"
+                        asp-route-row="@Model.Row"
+                        asp-route-number="@Model.Number">
+                        Оплатить @Model.Price.ToString("N2") ₽
+                    </a>
+            </div>
+        </form>
+    </div>
+
+    <aside class="payment-order-panel">
+        <h2>Ваш заказ</h2>
+
+        <div class="payment-event">
+                <img src="@Url.Content($"~/images/events/{Model.SeatEventDTO.TypeEvent}.jpg")"
+                     alt="@Model.SeatEventDTO.TypeEvent @Model.SeatEventDTO.EventName" />
+            <div>
+                <span class="event-type">@Model.SeatEventDTO.TypeEvent</span>
+                <h3>@Model.SeatEventDTO.EventName</h3>
+                <p>@Model.SeatEventDTO.EventDate.ToString("dd MMMM yyyy") · @Model.SeatEventDTO.EventDate.ToString("HH:mm")</p>
+            </div>
+        </div>
+
+        <div class="payment-order-details">
+            <div>
+                <span>Выбранные места</span> <br/><br/> <br/>
+                <span>Сектор: @Model.Sector</span> <br/>
+                <span>Ряд: @Model.Row</span> <br/>
+                <span>Место: @Model.Number</span>
+            </div>
+
+            <div class="payment-total">
+                <span>Итого</span>
+                <strong>@Model.Price.ToString("N2") ₽</strong>
+            </div>
+        </div>
+    </aside>
+</div>
+
+</section>

@@ -1,0 +1,83 @@
+﻿@model EventDTO
+
+@{
+    ViewData["Title"] = @Model.EventName;
+}
+
+<section class="event-details-page">
+    <a asp-controller="Events"
+       asp-action="Index"
+       class="back-link">
+        ← Назад к мероприятиям
+    </a>
+
+    <div class="event-details-hero">
+        <img src="@Url.Content($"~/images/events/{Model.TypeEvent}.jpg")"
+             alt="@Model.TypeEvent" />
+    </div>
+
+    <div class="event-details-content">
+        <div class="event-description-section">
+            <span class="event-type">@Model.TypeEvent</span>
+
+            <h1>@Model.EventName</h1>
+
+            <p class="event-details-description">
+                @Model.EventDescription
+            </p>
+        </div>
+
+        <div class="event-information-section">
+            <h2>Информация о событии</h2>
+
+            <div class="event-information-grid">
+                <div class="event-information-item">
+                    <span class="event-info-label">Дата</span>
+                    <span class="event-info-value">
+                        @Model.EventDate.ToString("dd MMMM yyyy")
+                    </span>
+                </div>
+
+                <div class="event-information-item">
+                    <span class="event-info-label">Время</span>
+                    <span class="event-info-value">
+                        @Model.EventDate.ToString("HH:mm")
+                    </span>
+                </div>
+
+                <div class="event-information-item">
+                    <span class="event-info-label">Место проведения</span>
+                    <span class="event-info-value">
+                        Культурный центр «Успех»
+                    </span>
+                </div>
+
+                <div class="event-information-item">
+                    <span class="event-info-label">Организатор</span>
+                    <span class="event-info-value">
+                        @Model.OrganizerName
+                    </span>
+                </div>
+            </div>
+
+            <div class="event-purchase-section">
+                <div>
+                    <span class="event-info-label">Средняя стоимость билета</span>
+                    <p class="event-details-price">
+                        @Model.AvgTicketPrice.ToString("N2") ₽
+                    </p>
+                    <span class="event-info-label">
+                        Фактическая цена зависит от выбранного места
+                    </span>
+                </div>
+
+                <a asp-controller="Events"
+                   asp-action="SelectSeats"
+                   asp-route-id="@Model.IdEvent"
+                   class="event-buy-button-details">
+                    Выбрать места →
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

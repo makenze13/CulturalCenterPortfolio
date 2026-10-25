@@ -1,0 +1,117 @@
+﻿@using CulturalCenterWeb.Models
+@model List<EventDTO>
+
+@{
+    ViewData["Title"] = "Мероприятия";
+    string? typeEvent = ViewBag.CurrentTypeEvent;
+}
+
+<section class="events-page">
+    <div class="events-header">
+        <h1>Мероприятия</h1>
+        <p>Откройте для себя яркие события культурного центра «Успех»</p>
+    </div>
+
+    <div class="events-filters">
+        <a asp-controller="Events"
+           asp-action="Index"
+           asp-route-page="1"
+           class="event-filter @(typeEvent == null ? "active" : "")">
+            Все мероприятия
+        </a>
+
+        <a asp-controller="Events"
+           asp-action="Index"
+           asp-route-page="1"
+           asp-route-typeEvent="Концерт"
+           class="event-filter @(typeEvent == "Концерт" ? "active" : "")">
+            Концерты
+        </a>
+
+        <a asp-controller="Events"
+           asp-action="Index"
+           asp-route-page="1"
+           asp-route-typeEvent="Спектакль"
+           class="event-filter @(typeEvent == "Спектакль" ? "active" : "")">
+            Спектакли
+        </a>
+
+        <a asp-controller="Events"
+           asp-action="Index"
+           asp-route-page="1"
+           asp-route-typeEvent="Киносеанс"
+           class="event-filter @(typeEvent == "Киносеанс" ? "active" : "")">
+            Киносеансы
+        </a>
+
+        <a asp-controller="Events"
+           asp-action="Index"
+           asp-route-page="1"
+           asp-route-typeEvent="Цирковое представление"
+           class="event-filter @(typeEvent == "Цирковое представление" ? "active" : "")">
+            Цирк
+        </a>
+
+        <a asp-controller="Events"
+           asp-action="Index"
+           asp-route-page="1"
+           asp-route-typeEvent="Опера"
+           class="event-filter @(typeEvent == "Опера" ? "active" : "")">
+            Опера
+        </a>
+    </div>
+
+    <div class="events-grid">
+
+        @foreach (var item in Model)
+        {
+            <div class="event-card">
+                <img src="@Url.Content($"~/images/events/{item.TypeEvent}.jpg")"/> 
+                <div class="event-card-content">
+                    <span class="event-type">@item.TypeEvent</span>
+                <h2>@item.EventName</h2>
+                <p class="event-date">@item.EventDate.ToString("dd.MM.yyyy HH:mm")</p>
+                <div class="event-card-footer">
+                    <span class="event-price">@item.AvgTicketPrice ₽</span>
+                    <a asp-controller="Events"
+                       asp-action="Details"
+                       asp-route-id="@item.IdEvent"
+                       class="event-details">
+                        Подробнее →
+                    </a>
+                </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    @if(ViewBag.TotalPages > 1)
+    {
+        <nav class="events-pagination" aria-label="Страницы мероприятий">
+        
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-typeEvent="@ViewBag.CurrentTypeEvent" class="pagination__button">
+                ← Назад
+            </a>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <a asp-action="Index" asp-route-page="@i" asp-route-typeEvent="@ViewBag.CurrentTypeEvent" class="pagination__button @(i == ViewBag.CurrentPage ? "active" : "")">
+                @i
+            </a>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+             <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-typeEvent="@ViewBag.CurrentTypeEvent" class="pagination__button">
+                Вперёд →
+            </a>
+        }
+
+    </nav>
+    }
+    
+</section>

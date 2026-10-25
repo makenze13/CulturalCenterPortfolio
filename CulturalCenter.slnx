@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CulturalCenterApi/CulturalCenterApi.csproj" />
+  <Project Path="CulturalCenterWeb/CulturalCenterWeb.csproj" Id="4510bad6-a0f5-4277-baa2-f5106e7aa82b" />
+  <Project Path="CulturalCenterWpf/CulturalCenterWpf.csproj" Id="26ebd565-f5b4-4649-9dd0-1e5443bd0aec" />
+</Solution>

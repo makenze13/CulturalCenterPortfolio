@@ -1,0 +1,134 @@
+﻿@{
+    ViewData["Title"] = "Вход";
+    bool showRegister = ViewBag.ShowRegister == true;
+}
+
+<section class="auth-page">
+    <div class="auth-card">
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="auth-logo">
+            <span class="logo-diamond"></span>
+            <span>Успех</span>
+        </a>
+
+        <div class="auth-header">
+            <h1>Добро пожаловать</h1>
+            <p>Войдите в аккаунт, чтобы управлять своими билетами</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button type="button"
+                     class="auth-tab @(showRegister ? "" : "active")"
+                    id="loginTab">
+                Вход
+            </button>
+
+            <button type="button"
+                     class="auth-tab @(!showRegister ? "" : "active")"
+                    id="registerTab">
+                Регистрация
+            </button>
+        </div>
+
+        <form id="loginForm" class="auth-form" asp-controller="Account" asp-action="Login" method="post" hidden="@showRegister">
+            @Html.AntiForgeryToken()
+            
+            <div asp-validation-summary="All"
+                    class="validation-summary"></div>
+
+            <div class="auth-field">
+                <label for="login">Логин</label>
+                <input type="text"
+                       id="login"
+                       name="login"
+                       placeholder="Введите логин"
+                       autocomplete="username"
+                       required />
+            </div>
+
+            <div class="auth-field">
+                <label for="loginPassword">Пароль</label>
+                <input type="password"
+                       id="loginPassword"
+                       name="password"
+                       placeholder="Введите пароль"
+                       autocomplete="current-password"
+                       required />
+            </div>
+
+            <button type="submit" class="auth-submit">
+                Войти
+            </button>
+        </form>
+
+        <form id="registerForm" class="auth-form" asp-controller="Account" asp-action="Register" hidden="@(!showRegister)" method="post">
+            @Html.AntiForgeryToken()
+            
+            <div asp-validation-summary="All"
+                    class="validation-summary"></div>
+
+            <div class="auth-field">
+                <label for="registerLogin">Логин</label>
+                <input type="text"
+                       id="registerLogin"
+                       name="login"
+                       placeholder="Придумайте логин"
+                       autocomplete="username"
+                       required />
+            </div>
+
+            <div class="auth-field">
+                <label for="registerPassword">Пароль</label>
+                <input type="password"
+                       id="registerPassword"
+                       name="password"
+                       placeholder="Придумайте пароль"
+                       autocomplete="new-password"
+                       required />
+            </div>
+
+            <div class="auth-field">
+                <label for="confirmPassword">Повторите пароль</label>
+                <input type="password"
+                       id="confirmPassword"
+                       name="confirmPassword"
+                       placeholder="Повторите пароль"
+                       autocomplete="new-password"
+                       required />
+            </div>
+
+            <button type="submit" class="auth-submit" >
+                Создать аккаунт
+            </button>
+        </form>
+
+        <p class="auth-footer">
+            Культурный центр «Успех»
+        </p>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        function showForm(isLogin) {
+            loginForm.hidden = !isLogin;
+            registerForm.hidden = isLogin;
+
+            loginTab.classList.toggle('active', isLogin);
+            registerTab.classList.toggle('active', !isLogin);
+
+            document.title = isLogin
+                ? 'Вход — Успех'
+                : 'Регистрация — Успех';
+        }
+
+        loginTab.addEventListener('click', () => showForm(true));
+        registerTab.addEventListener('click', () => showForm(false));
+    </script>
+}
